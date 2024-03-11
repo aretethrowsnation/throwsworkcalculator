@@ -1,0 +1,296 @@
+* {
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: "Versa";
+  src: url("../fonts/Versa-Versa.woff") format("woff"),
+    url("../fonts/Versa-Versa.woff2") format("woff2");
+  /* Add additional font formats if necessary */
+}
+
+@font-face {
+  font-family: "DIN";
+  src: url("../fonts/DINEngschrift.woff") format("woff"),
+    url("../fonts/DINEngschrift.woff2") format("woff2");
+}
+
+body {
+  background-color: #f0f0f0; /* Color de fondo para el cuerpo */
+  background-image: url("../images/technique.png");
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo de los contenedores de Type 1 y Type 2 */
+#type1,
+#type2 {
+  background-color: #ffffff; /* Color de fondo para los contenedores */
+  border: 1px solid #ccc; /* Borde para los contenedores */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px auto;
+}
+
+/* Estilo de los campos de entrada y menús desplegables */
+input[type="number"],
+select,
+input[type="text"] {
+  width: 100%;
+  margin: 5px 0;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para el contenedor del "Combined Total" */
+#combinedTotalContainer {
+  float: right;
+  text-align: right;
+}
+
+/* Estilo para el encabezado h3 dentro del contenedor */
+#combinedTotalContainer h3 {
+  color: #092157; /* Cambiar el color a azul (#092157) */
+}
+
+/* Otros estilos CSS aquí */
+
+/* Estilo para el contenedor del "Combined Total" */
+#combinedTotalContainer {
+  position: fixed;
+  top: 20px; /* Ajusta la posición vertical según sea necesario */
+  right: 20px; /* Ajusta la posición horizontal según sea necesario */
+  text-align: right;
+}
+
+/* Estilo para el recuadro blanco */
+#combinedTotalBox {
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: right;
+}
+
+/* Estilo para el encabezado h3 dentro del contenedor */
+#combinedTotalBox h3 {
+  color: #092157; /* Cambiar el color a azul (#092157) */
+}
+
+/* Estilo para el encabezado h3 de "Total Type 2 Reps" */
+#type2 h3 {
+  color: #092157; /* Cambiar el color a azul (#092157) */
+}
+
+/* Otros estilos CSS aquí */
+
+#type1,
+#type2 {
+  /* Otros estilos aquí */
+  text-align: center;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 45%; /* Ajusta el ancho según sea necesario */
+  margin: 20px; /* Espacio entre los contenedores */
+  display: inline-block; /* Colocar en línea uno al lado del otro */
+}
+
+/* Otros estilos CSS aquí */
+
+/* Estilo para el encabezado h3 dentro del contenedor */
+#combinedTotalBox h3 {
+  color: #092157; /* Cambiar el color a azul (#092157) */
+}
+
+/* Otros estilos CSS aquí */
+
+/* Estilo de los botones */
+button {
+  background-color: #007bff; /* Color de fondo para los botones */
+  color: #fff; /* Color del texto de los botones */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Estilo para el contenedor de resultados */
+#results {
+  background-color: #ffffff;
+  padding: 10px;
+  border: 3px solid black; /* Add black border */
+  text-align: center;
+  font-size: 1em;
+  margin-top: 10px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+/* Estilo para el contenedor de drills utilizados */
+#drillsUsedBox {
+  background-color: #f5f5f5;
+  padding: 20px 0;
+  border: 3px solid black; /* Add black border */
+  margin-top: 10px;
+  min-width: 250px;
+  max-height: 60vh;
+  overflow: auto;
+  margin-bottom: 10px;
+}
+.drillsUsedBox-wrapper {
+  position: fixed;
+  right: 0;
+  top: 195px;
+  z-index: 99;
+}
+.drill-set {
+  border-bottom: 2px dashed;
+  padding: 0 20px;
+  position: relative;
+}
+.drill-set_totals p {
+  margin: 0 0 8px;
+}
+.drill-set h5 {
+  margin-bottom: 5px;
+}
+.drill-set ul {
+  margin-top: 0;
+  padding-left: 20px;
+}
+
+.btn-delete,
+.btn-edit {
+  background: transparent;
+  color: #000;
+  font-size: 35px;
+  padding: 0;
+  font-weight: normal;
+  width: 40px;
+  height: 40px;
+  line-height: 1;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: -12px;
+  opacity: 0;
+}
+.btn-edit {
+  right: 40px;
+  font-size: 24px;
+}
+.drill-set:hover .btn-delete,
+.drill-set:hover .btn-edit {
+  opacity: 1;
+}
+
+/* Estilo para el contenedor de resultados combinados */
+#combinedResults {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: 3px solid black; /* Add black border */
+  margin-top: 10px;
+  position: fixed;
+  top: 50px; /* Adjust the top position based on your layout */
+  right: 0; /* Position the combined results box at the top-right corner */
+}
+
+/* Estilo para el contenedor de drills seleccionados */
+#selectedDrillsBox {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: 3px solid black; /* Add black border */
+  margin-top: 10px;
+}
+
+/* Estilo para los contenedores de Type 1 y Type 2 */
+#type1,
+#type2 {
+  /* Otros estilos aquí */
+  text-align: center;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/* Estilo para los encabezados h2 */
+h2 {
+  font-family: "DIN", sans-serif;
+  width: 100%;
+  margin-top: 0;
+  text-align: center;
+}
+
+/* Estilo para el contenedor de menús desplegables y campos de entrada */
+.exercise-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/* Estilo para los campos de entrada y menús desplegables dentro del contenedor */
+.exercise-container div {
+  width: 30%;
+  float: left;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+h3 {
+  color: #092157;
+}
+
+/* Estilo para los botones */
+button {
+  background-color: #bf2626; /* Cambiar el color de fondo a rojo (#bf2626) */
+  color: #fff; /* Color del texto de los botones */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold; /* Hacer el texto en los botones negrita */
+}
+
+/* Otros estilos CSS aquí */
+
+/* Estilo para los encabezados */
+
+h1 {
+  font-family: "Versa", sans-serif;
+  background-color: #092157; /* Cambiar el color de fondo a rojo (#bf2626) */
+  text-align: center;
+  color: #fff; /* Color del texto de los botones */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+h2,
+h3 {
+  text-align: center;
+  color: #092157;
+}
+
+h3 {
+  font-family: "Versa", sans-serif;
+}
