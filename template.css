@@ -1,0 +1,139 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap-grid.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@font-face {
+  font-family: "din 1451 std";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./DINEngschriftStd.woff") format("woff");
+}
+
+* {
+  box-sizing: border-box;
+}
+:root {
+  --scale: 5px;
+}
+.bg-white {
+  background: #fff;
+}
+.logo-title {
+  width: calc(92.7 * var(--scale));
+}
+.card {
+  background-color: #ffffff;
+  border: calc(0.5 * var(--scale)) solid #092157;
+  font-family: sans-serif;
+  color: #102480;
+}
+.card .card-header {
+  height: calc(8 * var(--scale));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #092157;
+}
+.card-header h2 {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  color: #ffffff;
+  font-size: calc(4.5 * var(--scale));
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: 500;
+}
+.card .card-body {
+  padding: calc(0.5 * var(--scale));
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card h3 {
+  text-align: center;
+  font-size: calc(3 * var(--scale));
+  color: #092157;
+  margin-bottom: calc(0.5 * var(--scale));
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+}
+
+.card ul {
+  font-size: calc(2.5 * var(--scale));
+  padding-left: calc(5 * var(--scale));
+  margin-top: 0;
+}
+
+.card ul li {
+  position: relative;
+  list-style: none;
+}
+
+.card ul li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  left: calc(-2.3 * var(--scale));
+  top: calc(1 * var(--scale));
+  background: #102480;
+  border-radius: 50%;
+  transform: translateY(0%);
+}
+.totals-wrapper {
+  margin: calc(4 * var(--scale)) 0 0;
+  margin-top: auto;
+}
+.card .card-footer {
+  padding: 0 calc(0.5 * var(--scale));
+  font-size: calc(2.5 * var(--scale));
+}
+.card .card-footer h3 {
+  text-align: left;
+}
+.card .card-footer p {
+  margin-top: 0;
+}
+.card.total {
+  border-color: #bf2626;
+  padding-bottom: calc(6 * var(--scale));
+  height: 100%;
+}
+.card.total .card-header {
+  background-color: #bf2626;
+}
+.card.total .card-body {
+  position: sticky;
+  top: 0;
+}
+.card.set {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+div#output {
+  width: 100%;
+  min-height: 100vh;
+  display: none;
+}
+.main-content {
+  min-height: 100vh;
+}
+h2#workout_level_title {
+  font-size: 60px;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  margin-bottom: 0;
+  font-family: sans-serif;
+}
+h3#workout_level_sub {
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 30px;
+  margin: 0;
+  text-transform: uppercase;
+}
+div#total-card_wrapper h5 {
+  padding-left: 8px;
+  margin: 0;
+}
