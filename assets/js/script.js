@@ -242,6 +242,8 @@ let type1TotalActive = 0;
 let type2TotalActive = 0;
 let type1TotalFinal = 0;
 let type2TotalFinal = 0;
+let daysRecords = [];
+let activeDayIndex = 0;
 
 // Function to initialize dropdowns with drill options
 function initDropdowns() {
@@ -638,13 +640,13 @@ function downloadPDF(event) {
   event.target.disabled = true;
   updateRecordsHTML(recordsArr);
   const doc = new jspdf.jsPDF();
-  const el = document.querySelector(".output");
+  const el = document.querySelector("#output");
   el.style.display = "block";
   doc.html(el, {
     callback: function (doc) {
       el.style = "";
       event.target.disabled = false;
-      doc.save();
+      doc.save("Day_Workout_" + new Date().toLocaleString() + ".pdf");
     },
     x: 10,
     y: 10,
@@ -665,7 +667,8 @@ function saveData() {
     downloadImportFile(
       JSON.stringify({
         templateTitle,
-        recordsArr,
+        daysRecords,
+        activeDayIndex,
       }),
       "Throw_Work_save_" + new Date().toLocaleString() + ".txt",
       "text/plain"
@@ -674,15 +677,9 @@ function saveData() {
     alert("This Workout is currently empty!");
   }
 }
-function loadData(data) {
-  if (!data) return false;
+function showSelectedDrillsList(arr) {
   const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
-  templateTitle = data.templateTitle;
-  document.getElementById("workout_level").value = templateTitle;
-  selectedDrillsListEl.innerHTML = "";
-  type1TotalFinal = 0;
-  type2TotalFinal = 0;
-  data.recordsArr.forEach((item, i) => {
+  arr.forEach((item, i) => {
     let htmlCode = `
     <div class="drill-set" data-id="${item.id}">
     <button class="btn-delete" onclick="deleteItem(event)" data-id="${
@@ -705,7 +702,22 @@ function loadData(data) {
   </div>
     `;
     selectedDrillsListEl.innerHTML += htmlCode;
-
+  });
+}
+function loadData(data) {
+  if (!data) return false;
+  const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
+  const calendar_daysEl = document.getElementById("calendar_days");
+  templateTitle = data.templateTitle;
+  document.getElementById("workout_level").value = templateTitle;
+  selectedDrillsListEl.innerHTML = "";
+  calendar_daysEl.innerHTML = "";
+  type1TotalFinal = 0;
+  type2TotalFinal = 0;
+  let arr = data.daysRecords[data.activeDayIndex];
+  activeDayIndex = data.activeDayIndex;
+  showSelectedDrillsList(arr);
+  arr.forEach((item, i) => {
     type1TotalFinal += item.throws;
     type2TotalFinal += item.drills;
     document.getElementById("type1TotalCombined").innerHTML = type1TotalFinal;
@@ -713,8 +725,20 @@ function loadData(data) {
     document.getElementById("totalRepsCombined").innerHTML =
       type1TotalFinal + type2TotalFinal;
   });
-  recordsArr.splice(0, recordsArr.length);
-  recordsArr.push(...data.recordsArr);
+  recordsArr.splice(0, arr.length);
+  recordsArr.push(...arr);
+  daysRecords = data.daysRecords;
+  daysRecords.forEach((el, i) => {
+    calendar_daysEl.innerHTML +=
+      "<option value=" + i + ">Day " + (i + 1) + "</option>";
+  });
+  calendar_daysEl.innerHTML +=
+    "<option value=" +
+    daysRecords.length +
+    ">Day " +
+    (daysRecords.length + 1) +
+    "</option>";
+  calendar_daysEl.children[activeDayIndex].selected = true;
 }
 function calculateResult() {
   const targetEls = document.querySelectorAll(
@@ -766,10 +790,12 @@ function calculateResult() {
   resetForm();
 }
 function deleteItem(event) {
-  let index = Number(event.target.getAttribute("data-id"));
-  event.target.closest(".drill-set").remove();
+  let id = Number(event.target.getAttribute("data-id"));
+  let index = recordsArr.findIndex((el) => el.id == id);
   if (!recordsArr[index]) return false;
-  recordsArr = recordsArr.filter((el) => el.id != index);
+  event.target.closest(".drill-set").remove();
+  // recordsArr = recordsArr.filter((el) => el.id != id);
+  recordsArr.splice(index, 1);
   type1TotalFinal = recordsArr.reduce((a, b) => a + b.throws, 0);
   type2TotalFinal = recordsArr.reduce((a, b) => a + b.drills, 0);
   updateCombinedTotalThrows();
@@ -892,13 +918,141 @@ function editItemCancel() {
   calc_wrapperEl.classList.remove("edit-mode");
   resetForm();
 }
+const calendar_daysEl = document.getElementById("calendar_days");
+const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
+const calc_controlsEl = document.getElementById("calc-controls");
+function saveCalendarDay(event) {
+  if (!recordsArr.length) {
+    return alert("Error: You can not Save an empty day!");
+  }
+  let response = confirm(
+    "Are you sure you want to save this as a new day to calendar?"
+  );
+  if (response) {
+    const newDayIndex = daysRecords.length + 1;
+    daysRecords.push([...recordsArr]);
+
+    calendar_daysEl.innerHTML += `<option value="${newDayIndex}" selected>Day ${
+      newDayIndex + 1
+    }</option>`;
+    recordsArr = [];
+    resetForm();
+    updateCombinedTotalThrows();
+    selectedDrillsListEl.innerHTML = "";
+    activeDayIndex = newDayIndex;
+  }
+}
+
+function switchCalendarActiveDay(index) {
+  index = Number(index);
+  selectedDrillsListEl.innerHTML = "";
+  if (daysRecords[index]) {
+    recordsArr = daysRecords[index];
+    activeDayIndex = index;
+    showSelectedDrillsList(recordsArr);
+  } else {
+    activeDayIndex = daysRecords.length;
+    recordsArr = [];
+  }
+  resetForm();
+  updateCombinedTotalThrows();
+}
+function updateCalendarHTML(arr) {
+  const dayCards_wrapperEl = document.getElementById("day-cards_wrapper");
+  dayCards_wrapperEl.innerHTML = "";
+  arr.forEach((dayArr, i) => {
+    let throws = 0;
+    let drills = 0;
+    let dayNum = i + 1;
+    labelsBytype1HTML = "";
+    labelsBytype2HTML = "";
+    dayArr.forEach((el, i) => {
+      throws += el.throws;
+      drills += el.drills;
+      if (el.type1Vals.length) {
+        labelsBytype1HTML += `<h5>set ${i + 1}</h5>
+      <ul>
+      ${el.type1Vals.map((val) => "<li>" + val + "</li>").join("")}
+      </ul>
+`;
+      }
+      if (el.type2Vals.length) {
+        labelsBytype2HTML += `<h5>set ${i + 1}</h5>
+        <ul>
+        ${el.type2Vals.map((val) => "<li>" + val + "</li>").join("")}
+        </ul>
+  `;
+      }
+    });
+    let htmlCode = `
+    <div class="col-md-3 total-card_wrapper">
+                <div class="card total day">
+                  <div class="card-caption">Day ${dayNum}</div>
+                  <div class="card-header">
+                    <h2>total work</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="type1-wrapper">
+                      <h3>Type I Drills:</h3>
+                    ${labelsBytype1HTML}
+                    </div>
+                    <div class="type2-wrapper">
+                      <h3>Type II Drills:</h3>
+
+                      ${labelsBytype2HTML}
+                    </div>
+                    <div class="totals-wrapper">
+                      <ul class="mb-0">
+                        <li>
+                          <strong>Amount of Throws: <span>${throws}</span></strong>
+                        </li>
+                        <li>
+                          <strong>Amount of Drills: <span>${drills}</span></strong>
+                        </li>
+                        <li>
+                          <strong>Amount of Reps: <span>${
+                            throws + drills
+                          }</span></strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    `;
+    dayCards_wrapperEl.innerHTML += htmlCode;
+  });
+}
+function downloadCalendarPDF(event) {
+  if (!daysRecords.length) {
+    alert("There is no days in calendar to download!");
+    return false;
+  }
+  event.target.disabled = true;
+  updateCalendarHTML(daysRecords);
+  const doc = new jspdf.jsPDF();
+  const el = document.querySelector("#output-calander");
+  el.style.display = "block";
+  doc.html(el, {
+    callback: function (doc) {
+      el.style = "";
+      event.target.disabled = false;
+      doc.save("Throw_Work_Calendar_" + new Date().toLocaleString() + ".pdf");
+    },
+    x: 10,
+    y: 10,
+    width: 190,
+    windowWidth: 950,
+  });
+}
 document
   .getElementById("load-file")
-  .addEventListener("change", async function (event) {
+  .addEventListener("input", async function (event) {
     const file = event.target.files.item(0);
     const data = JSON.parse(await file.text());
 
     loadData(data);
+    event.target.value = "";
   });
 
 function disable_type2() {
@@ -915,6 +1069,18 @@ document
       calc_wrapperEl.classList.remove("type2_disabled");
     }
   });
+
+document.getElementById("calendar_days").addEventListener("change", (e) => {
+  let value = Number(e.target.value);
+
+  if (value != activeDayIndex && daysRecords[value]) {
+    calc_controlsEl.classList.add("edit-mode");
+  } else {
+    calc_controlsEl.classList.remove("edit-mode");
+  }
+  switchCalendarActiveDay(value);
+});
+
 // Call the function to update the "Drills Used on Workout" box when the page loads
 window.onload = function () {
   initDropdowns();
