@@ -135,6 +135,7 @@ button {
   position: fixed;
   top: 10px;
   right: 10px;
+  z-index: 1;
 }
 
 /* Estilo para el contenedor de drills utilizados */
