@@ -663,7 +663,7 @@ function downloadImportFile(content, fileName, contentType) {
 }
 
 function saveData() {
-  if (recordsArr.length) {
+  if (daysRecords.length) {
     downloadImportFile(
       JSON.stringify({
         templateTitle,
@@ -674,7 +674,9 @@ function saveData() {
       "text/plain"
     );
   } else {
-    alert("This Workout is currently empty!");
+    alert(
+      "This Workout calendar is currently empty! \nuse the'Save Day' button to submit these values"
+    );
   }
 }
 function showSelectedDrillsList(arr) {
@@ -706,6 +708,9 @@ function showSelectedDrillsList(arr) {
 }
 function loadData(data) {
   if (!data) return false;
+  if (!data.daysRecords.length) {
+    return alert("This file has an empty calendar and can't be loaded");
+  }
   const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
   const calendar_daysEl = document.getElementById("calendar_days");
   templateTitle = data.templateTitle;
@@ -714,8 +719,8 @@ function loadData(data) {
   calendar_daysEl.innerHTML = "";
   type1TotalFinal = 0;
   type2TotalFinal = 0;
-  let arr = data.daysRecords[data.activeDayIndex];
-  activeDayIndex = data.activeDayIndex;
+  let arr = data.daysRecords[0];
+  activeDayIndex = 0;
   showSelectedDrillsList(arr);
   arr.forEach((item, i) => {
     type1TotalFinal += item.throws;
