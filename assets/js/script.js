@@ -227,14 +227,198 @@ const type2DrillsP0 = [
   "PUNCH (SS)",
   "WALKING PUNCH (SS)",
 ];
+const type2DrillsP1 = [
+  "6 POSITION SEQUENCE",
+  "SIDE TO SIDE STACK",
+  "STACK & SWING",
+  "Stack & Twist",
+  "Postion 2 T",
+  "POSITION 2-3 REPEATS",
+  "POSITION 3-4 REPEATS",
+  "ARM SHOULDER WINDS",
+  "WIND-UP 1",
+  "T- Fold",
+  "5 POS WIND",
+  "KNEELING 1-2-3-4",
+  "KNEELING ARM SWINGS",
+  "POSITION 2-3-4 REPEATS",
+  "WIND-UP 2",
+  "POSITION 4-5 REPEATS",
+  "KNEELING 2-3, 3-4",
+  "STRETCH & WIND",
+  "SHOULDER STRETCH",
+  "SINGLE LEG WIND-UP 1",
+  "90º Fold",
+  "SHIFT & STEP",
+  "HINGE & OPEN",
+  "HINGE SHIFT STEP",
+  "DROP - IN",
+  "CAST & SWEEP",
+  "OPEN - CLOSE - Cast",
+  "OPEN-CLOSE-OPEN",
+  "PILLAR 2 WINDS & 270",
+  "PILLAR 1 HINGE",
+];
+const type2DrillsP2 = [
+  "THE HINGE (ENTRY/sprint LEG)",
+  "T-Hinge",
+  "HINGE - HINGE",
+  "KNEE HUG",
+  "HINGE & PUSH OUT",
+  "T Hinge & Stack",
+  "Center Of Mass Stack",
+  "90º WALK AROUND",
+  "180º - 360",
+  "90º O'CLOCK HINGE",
+  "Hinge and 180",
+  "SWEEP LEG KICK",
+  "T - Hinge & Step",
+  "HINGE & COUNTER",
+  "Block Arm T- Extension",
+  "HINGE Stack STEP",
+  "HINGE & FORWARD",
+  "T-Fold Ext & Cast",
+  "DROP - IN",
+  "PILLAR 2 WINDS & 270",
+  "270 Drop",
+  "HINGES (ENTRY LEG)",
+  "CASTER VS OPENER",
+  "CENTER OF MASS SHIFT",
+  "HINGE & SHIFT WITH ENTRY ARM",
+  "HINGE SHIFT & STEP",
+  "PILLAR 2 T",
+  "ARM CAST - MIDLINE",
+  "ARM OPEN",
+  "CENTER OF MASS",
+];
+const type2DrillsP3 = [
+  "PUDDLE JUMP 1-2-3",
+  "SPRINT COUNTER",
+  "SWEEP STEP",
+  "TEETER",
+  "SWEEP TEETER",
+  "STEP & LIFT",
+  "KNEE PULL",
+  "PUSH & Open",
+  "3-4 T",
+  "Drop-in & STep",
+  "POLE PIVOT",
+  "STRETCH & DROP",
+  "STRETCH & OPEN",
+  "DROP DOWNS",
+  "PUDDLE 3",
+  "SQUAT & TWIST",
+  "Push, Squat & Turn",
+  "270º STEP DOWN",
+  "WIDE KNEES",
+  "STRETCH & SQUEEZE",
+  "LINE WALKS",
+  "PILLAR 3-4 T",
+  "STEP DOWNS",
+  "PUDDLE 3 (PC 3-4)",
+  "WALKING LINE",
+  "PUSH SQUAT & TURN",
+];
+const type2DrillsP4 = [
+  "WALK AROUND",
+  "(WRAP 101) W/ BAND",
+  "WALK AROUND - T",
+  "WHEEL PIVOT",
+  "T WRAP",
+  "T WRAP TWIST",
+  "WALKING LINE DRILL",
+  "Push & Open Wheel",
+  "Hold & FOLD",
+  "SQUAT & TURN",
+  "STEP DOWN - SWEEP KNEE LIFT",
+  "SHOULDER STRETCH W/ BAND",
+  "STRETCH & SQUEEZE",
+  "SWEEP LEG KNEE LIFT",
+  "MODIFIED WHEEL",
+  "REACH & HIGH POINT",
+  "TWIST & DROP",
+  "PUSH OPEN & WRAP",
+  "OPEN & T WRAP",
+  "Push Pull Open",
+  "PUSH PULL WRAP & OPEN",
+  "PUDDLE 3 & WRAP",
+  "WALK AROUND (WRAP 101)",
+  "BLOCK ARM WRAP",
+  "SEPARATION - RSP VS DT",
+  "Stretch & Wrap",
+  "STRETCH & OPEN",
+  "PUSH & OPEN",
+  "WRAP & Open",
+  "T-WHEEL",
+  "OPEN & STOP",
+  "OPEN & WRAP",
+  "STACK COUNTERS",
+  "ELEVATOR DROP (SQUAT)",
+  "UP-DOWN",
+  "PUSH DOWN",
+  "DRILL DOWN",
+  "T - STOP",
+  "PUSH AROUND",
+  "T-FOLD EXT",
+  "SINGLE LEG PUSH DOWN",
+  "WIND & DRILL",
+  "PILLAR 5T",
+  "ELEVATOR DROP",
+  "STACK COUNTER",
+  "PUSH AROUND",
+  "LOAD & FOLD",
+  "FOLD & OPEN",
+  "OPEN & DROP",
+  "HIP PUNCH REPEAT",
+  "BLOCK ARM STOPS",
+  "Single Leg Push-Down",
+  "Single Leg Drill Down",
+  "Squat & Cast",
+];
+const type2DrillsP5 = [];
+const type2DrillsP6 = [
+  "BL ACTIVATION. & TWIST",
+  "BLOCK LEG ACT",
+  "HIP TWIST Repeat",
+  "BLOCK ARM STOPS",
+  "DELIVERY T",
+  "BLOCK BLOCK",
+  "WALK BLOCK",
+  "Single Leg BLAT",
+  "TWIST THROUGHS",
+  '1" Jump',
+  "BLOCK LEG EXTENSION STOPS",
+  "BLOCK LEG COUNTER",
+  "BLOCK LEG ACT. STOPS",
+  "BLOCK DOWNS",
+  "WALL BLOCK",
+  "PRE-LOADED WINDS",
+  "SW TO BLAT",
+  "ISO PULL (PARTNER)",
+  "PLW TO BLAT",
+  "THE REVERSE",
+  "REVERSE VS NONREVERSE",
+  "DOWN-DOWN",
+  "SQUATTED THROW",
+  "Block Leg Activation & Hip Twist",
+  "SW TO BLET",
+  "BLOCK LEG EXTENSION & TWIST",
+  "BLOCK LEG EXTENSION",
+  "BLOCK ARM",
+  "SHOULDER STOPS",
+  "ISO PUNCH (PARTNER)",
+  "SQUATTED WINDS",
+  "PLW TO BLET",
+  "REVERSE BLOCK LEG COUNTER EXT",
+];
 const type2DrillsGroups = [
   type2DrillsP0,
-  type2Drills.filter((el) => el.startsWith("P1")),
-  type2Drills.filter((el) => el.startsWith("P2")),
-  type2Drills.filter((el) => el.startsWith("P3")),
-  type2Drills.filter((el) => el.startsWith("P4")),
+  type2DrillsP1,
+  type2DrillsP2,
+  type2DrillsP3,
+  type2DrillsP4,
   type2Drills.filter((el) => el.startsWith("P5")),
-  type2Drills.filter((el) => el.startsWith("P6")),
+  type2DrillsP6,
 ];
 let recordsArr = [];
 let templateTitle = "";
@@ -314,7 +498,7 @@ function updateType2Dropdowns() {
         '<option value="" selected>Select type II Drills group</option>';
       type2DrillsGroups.forEach((el, i) => {
         groupSelectEl.innerHTML +=
-          '<option value="' + i + '">P' + i + "</option>";
+          '<option value="' + i + '">Pillar  ' + i + "</option>";
       });
       // Add the new dropdowns
       type2DropdownsContainer.appendChild(groupSelectEl);
@@ -522,6 +706,7 @@ function updateRecordsHTML(arr) {
   let throwsTotal = 0;
   let drillsTotal = 0;
   let repsTotal = 0;
+  let weight = Number(document.getElementById("weight_input").value);
   labelsBytype1HTML = "";
   labelsBytype2HTML = "";
   workout_level_titleEl.innerHTML = templateTitle;
@@ -545,13 +730,22 @@ function updateRecordsHTML(arr) {
        <div class="type2-wrapper">
         ${item.type2Vals.length ? "<h3>Type II Drills:</h3>" : ""}
          <ul>
-         ${item.type2Vals.map((val) => "<li>" + val + "</li>").join("")}
+         ${item.type2Vals
+           .map(
+             (val) =>
+               "<li>" +
+               val +
+               " (Reps: " +
+               Math.round(item.drills / item.type2Vals.length) +
+               ")</li>"
+           )
+           .join("")}
           
          </ul>
        </div>
        <div class="totals-wrapper">
          <ul class="mb-0">
-           <li>
+         <li>
              <strong>Amount of Throws: <span>${item.throws}</span></strong>
            </li>
            <li>
@@ -585,7 +779,9 @@ function updateRecordsHTML(arr) {
       labelsBytype1HTML += `
   <h5>set ${i + 1}</h5>
   <ul>
-  ${item.type1Vals.map((el) => "<li>" + el + "</li>").join("")}
+  ${item.type1Vals
+    .map((el) => "<li>" + el + "(Throws: " + item.throws + ")</li>")
+    .join("")}
   </ul>
   `;
     }
@@ -593,7 +789,16 @@ function updateRecordsHTML(arr) {
       labelsBytype2HTML += `
   <h5>set ${i + 1}</h5>
   <ul>
-  ${item.type2Vals.map((el) => "<li>" + el + "</li>").join("")}
+  ${item.type2Vals
+    .map(
+      (el) =>
+        "<li>" +
+        el +
+        "(Reps: " +
+        Math.round(item.drills / item.type2Vals.length) +
+        ")</li>"
+    )
+    .join("")}
   </ul>
   `;
     }
@@ -616,6 +821,9 @@ function updateRecordsHTML(arr) {
     </div>
     <div class="totals-wrapper">
       <ul class="mb-0">
+      <li>
+      <strong>Weight: <span>${weight ? weight + "kg" : "unset"}</span></strong>
+    </li> 
         <li>
           <strong>Amount of Throws: <span>${throwsTotal}</span></strong>
         </li>
@@ -639,19 +847,24 @@ function downloadPDF(event) {
   }
   event.target.disabled = true;
   updateRecordsHTML(recordsArr);
-  const doc = new jspdf.jsPDF();
+  const doc = new jspdf.jsPDF("p", "pt", [612, 792]);
   const el = document.querySelector("#output");
   el.style.display = "block";
-  doc.html(el, {
-    callback: function (doc) {
-      el.style = "";
-      event.target.disabled = false;
-      doc.save("Day_Workout_" + new Date().toLocaleString() + ".pdf");
-    },
-    x: 10,
-    y: 10,
-    width: 190,
-    windowWidth: 950,
+  var divHeight = el.clientHeight;
+  var divWidth = el.clientWidth;
+  var ratio = divHeight / divWidth;
+  html2canvas(el, {
+    height: divHeight,
+    width: divWidth,
+  }).then(function (canvas) {
+    el.style.display = "";
+    var image = canvas.toDataURL("image/jpeg");
+    var width = doc.internal.pageSize.getWidth();
+    var height = doc.internal.pageSize.getHeight();
+    height = ratio * width;
+    doc.addImage(image, "JPEG", 0, 0, width - 20, height - 100);
+    doc.save("Day_Workout_" + new Date().toLocaleString() + ".pdf"); //Download the rendered PDF.
+    event.target.disabled = false;
   });
 }
 function downloadImportFile(content, fileName, contentType) {
@@ -692,9 +905,17 @@ function showSelectedDrillsList(arr) {
     }">&#9998;</button>
     <h5>Set ${item.id}</h5>
     <ul>
-     ${[...item["type1Vals"], ...item["type2Vals"]]
-       .map((value) => "<li>" + value + "</li>")
-       .join("")}
+     ${[
+       ...item["type1Vals"].map((value) => "<li>" + value + "</li>"),
+       ...item["type2Vals"].map(
+         (value) =>
+           "<li>" +
+           value +
+           " (Reps: " +
+           Math.round(item.drills / item.type2Vals.length) +
+           ")</li>"
+       ),
+     ].join("")}
     </ul>
     <div class="drill-set_totals">
       <p>Throws - Type I: ${item.throws}</p>
@@ -964,11 +1185,18 @@ function switchCalendarActiveDay(index) {
 }
 function updateCalendarHTML(arr) {
   const dayCards_wrapperEl = document.getElementById("day-cards_wrapper");
+  const calander_sub_titleEl = document.getElementById("calander_sub_title");
+  const calendar_title_inputEl = document.getElementById(
+    "calendar_title_input"
+  );
+  console.log(calander_sub_titleEl, calendar_title_inputEl);
   dayCards_wrapperEl.innerHTML = "";
+  calander_sub_titleEl.innerHTML = calendar_title_inputEl.value;
   arr.forEach((dayArr, i) => {
     let throws = 0;
     let drills = 0;
     let dayNum = i + 1;
+    let weight = Number(document.getElementById("weight_input").value);
     labelsBytype1HTML = "";
     labelsBytype2HTML = "";
     dayArr.forEach((el, i) => {
@@ -977,14 +1205,25 @@ function updateCalendarHTML(arr) {
       if (el.type1Vals.length) {
         labelsBytype1HTML += `<h5>set ${i + 1}</h5>
       <ul>
-      ${el.type1Vals.map((val) => "<li>" + val + "</li>").join("")}
+      ${el.type1Vals
+        .map((val) => "<li>" + val + " (Throws: " + el.throws + ")</li>")
+        .join("")}
       </ul>
 `;
       }
       if (el.type2Vals.length) {
         labelsBytype2HTML += `<h5>set ${i + 1}</h5>
         <ul>
-        ${el.type2Vals.map((val) => "<li>" + val + "</li>").join("")}
+        ${el.type2Vals
+          .map(
+            (val) =>
+              "<li>" +
+              val +
+              " (Reps: " +
+              Math.round(el.drills / el.type2Vals.length) +
+              ")</li>"
+          )
+          .join("")}
         </ul>
   `;
       }
@@ -1002,12 +1241,17 @@ function updateCalendarHTML(arr) {
                     ${labelsBytype1HTML}
                     </div>
                     <div class="type2-wrapper">
-                      <h3>Type II Drills:</h3>
+                      <h3>${labelsBytype2HTML ? "Type II Drills:" : ""}</h3>
 
                       ${labelsBytype2HTML}
                     </div>
                     <div class="totals-wrapper">
                       <ul class="mb-0">
+                      <li>
+                          <strong>Weight: <span>${
+                            weight || "unset"
+                          }</span></strong>
+                        </li>
                         <li>
                           <strong>Amount of Throws: <span>${throws}</span></strong>
                         </li>
@@ -1035,19 +1279,28 @@ function downloadCalendarPDF(event) {
   }
   event.target.disabled = true;
   updateCalendarHTML(daysRecords);
-  const doc = new jspdf.jsPDF();
+  const doc = new jspdf.jsPDF("p", "pt", [612, 792]);
   const el = document.querySelector("#output-calander");
+
   el.style.display = "block";
-  doc.html(el, {
-    callback: function (doc) {
-      el.style = "";
-      event.target.disabled = false;
-      doc.save("Throw_Work_Calendar_" + new Date().toLocaleString() + ".pdf");
-    },
-    x: 10,
-    y: 10,
-    width: 190,
-    windowWidth: 950,
+  let divHeight = el.clientHeight;
+  let divWidth = el.clientWidth;
+  let ratio = divHeight / divWidth;
+  html2canvas(el, {
+    height: divHeight,
+    width: divWidth,
+  }).then(function (canvas) {
+    el.style.display = "";
+    var image = canvas.toDataURL("image/jpeg");
+    var width = doc.internal.pageSize.getWidth();
+    var height = doc.internal.pageSize.getHeight();
+    height = ratio * width;
+    if (height > doc.internal.pageSize.getHeight()) {
+      height = doc.internal.pageSize.getHeight();
+    }
+    doc.addImage(image, "JPEG", 0, 0, width - 20, height - 20);
+    doc.save("Throw_Work_Calendar_" + new Date().toLocaleString() + ".pdf"); //Download the rendered PDF.
+    event.target.disabled = false;
   });
 }
 document
@@ -1091,5 +1344,5 @@ window.onload = function () {
   initDropdowns();
   updateType2Dropdowns();
 
-  document.getElementById("selectedDrillsList").innerHTML = "";
+  // document.getElementById("selectedDrillsList").innerHTML = "";
 };
