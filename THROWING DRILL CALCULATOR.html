@@ -40,6 +40,11 @@
             placeholder="Target to address (if any)"
             id="workout_level_sub_input"
           />
+          <input
+            type="text"
+            placeholder="Calendar Target to address (if any)"
+            id="calendar_title_input"
+          />
           <!-- Input for the amount of Type I throws -->
           <label for="type1Throws">Amount of Throws (Type I): </label>
           <input type="number" id="type1Throws" placeholder="Enter Amount" />
@@ -65,6 +70,13 @@
             placeholder="Drill Reps - Acceleration Formula"
             min="1"
             class="type2_hidden"
+          />
+
+          <input
+            type="number"
+            min="1"
+            id="weight_input"
+            placeholder="Weight in kg"
           />
 
           <p class="edit-mode_hidden">
@@ -177,16 +189,48 @@
         </div>
       </div>
     </div>
+    <div class="sidebar-content">
+      <div class="content-inner">
+        <iframe
+          src="https://www.loom.com/embed/ce078bcb58f54ea0973eb98f241c8b08?hideEmbedTopBar=true"
+          border="0"
+          width="100%"
+          height="270"
+          style="border: 0"
+        ></iframe>
+        <h4>How it works</h4>
+        <p>
+          <strong>Save</strong>: export the save file with all the current
+          values
+        </p>
+        <p>
+          <strong>load</strong>: import values from a saved file back to the
+          calculator
+        </p>
+        <p>
+          <strong>Day dropdown</strong>: switch between day workouts in the
+          calendar
+        </p>
+        <p>
+          <strong>Save Day</strong>: submit the current day values as a new day
+          to calendar
+        </p>
+      </div>
+    </div>
     <div class="output bg-white p-3 py-5" id="output">
       <div class="container">
-        <div class="d-block mb-4">
-          <img
-            src="./assets/images/Title.png"
-            alt="image"
-            class="logo-title img-fluid mx-auto d-block"
-          />
-          <h2 id="workout_level_title"></h2>
-          <h3 id="workout_level_sub"></h3>
+        <div class="d-block mb-5">
+          <div class="d-flex justify-content-between">
+            <img
+              src="./assets/images/Title.png"
+              alt="image"
+              class="logo-title img-fluid d-block"
+            />
+            <div>
+              <h2 id="workout_level_title"></h2>
+              <h3 id="workout_level_sub"></h3>
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-9">
@@ -200,7 +244,7 @@
       <div class="container">
         <div class="d-block mb-4">
           <h2 class="calander_title">THROW WORK CALENDAR</h2>
-          <h3 id="workout_level_sub"></h3>
+          <h3 id="calander_sub_title" class="calander_sub_title"></h3>
         </div>
         <div class="row">
           <div class="col-md-12">
