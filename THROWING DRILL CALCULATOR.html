@@ -157,6 +157,12 @@
           >
             cancel
           </button>
+          <label for="loop_LTD" class="type2_hidden loop_label"
+            >LTD loop <input type="checkbox" id="loop_LTD" value="LTD" checked
+          /></label>
+          <label for="loop_LDT" class="type2_hidden loop_label"
+            >LDT loop <input type="checkbox" id="loop_LDT" value="LDT "
+          /></label>
         </div>
         <div id="results">
           <h2>Combined Total Throws</h2>
@@ -226,17 +232,14 @@
               alt="image"
               class="logo-title img-fluid d-block"
             />
-            <div>
-              <h2 id="workout_level_title"></h2>
-              <h3 id="workout_level_sub"></h3>
-            </div>
+            <h3 id="workout_level_sub" class="mx-auto"></h3>
+            <h2 id="workout_level_title"></h2>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-12">
             <div class="row" id="set-cards_wrapper"></div>
           </div>
-          <div class="col-md-3" id="total-card_wrapper"></div>
         </div>
       </div>
     </div>

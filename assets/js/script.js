@@ -350,6 +350,7 @@ const type2DrillsP4 = [
   "PUSH & OPEN",
   "WRAP & Open",
   "T-WHEEL",
+  "Skip Skip Push T",
   "OPEN & STOP",
   "OPEN & WRAP",
   "STACK COUNTERS",
@@ -633,6 +634,8 @@ function addDrillSet() {
       throws: type1TotalActive,
       drills: type2TotalActive,
       reps: type1TotalActive + type2TotalActive,
+      weight: Number(document.getElementById("weight_input").value) || "",
+      loop: document.querySelector(".loop_label input:checked").value.trim(),
       formula,
     });
 
@@ -706,7 +709,7 @@ function updateRecordsHTML(arr) {
   let throwsTotal = 0;
   let drillsTotal = 0;
   let repsTotal = 0;
-  let weight = Number(document.getElementById("weight_input").value);
+
   labelsBytype1HTML = "";
   labelsBytype2HTML = "";
   workout_level_titleEl.innerHTML = templateTitle;
@@ -714,17 +717,21 @@ function updateRecordsHTML(arr) {
     "workout_level_sub_input"
   ).value;
   arr.forEach((item, i) => {
+    let weight = item.weight;
     const htmlCode = `
-   <div class="col-md-4 mb-3">
+   <div class="col-md-3 mb-3">
    <div class="card set pb-3">
      <div class="card-header">
        <h2>set ${i + 1}</h2>
      </div>
      <div class="card-body">
+     <div class="${item.loop === "LDT" ? "d-flex flex-column-reverse" : ""}">
        <div class="type1-wrapper">
          <h3>Type I Drills:</h3>
          <ul>
-         ${item.type1Vals.map((val) => "<li>" + val + "</li>").join("")}
+         ${item.type1Vals
+           .map((val) => "<li>" + val + " (Throws: " + item.throws + ")</li>")
+           .join("")}
          </ul>
        </div>
        <div class="type2-wrapper">
@@ -743,8 +750,14 @@ function updateRecordsHTML(arr) {
           
          </ul>
        </div>
+       </div>
        <div class="totals-wrapper">
          <ul class="mb-0">
+         <li>
+         <strong>Weight: <span>${
+           weight ? weight + "kg" : "unset"
+         }</span></strong>
+       </li> 
          <li>
              <strong>Amount of Throws: <span>${item.throws}</span></strong>
            </li>
@@ -754,6 +767,13 @@ function updateRecordsHTML(arr) {
            <li>
              <strong>Amount of Reps: <span>${item.reps}</span></strong>
            </li>
+          ${
+            item.type2Vals.length
+              ? ` <li>
+          <strong>Loop: <span>${item.loop || "LTD"}</span></strong>
+        </li>`
+              : ""
+          }
          </ul>
        </div>
      </div>
@@ -803,27 +823,19 @@ function updateRecordsHTML(arr) {
   `;
     }
   });
+  const targetEl =
+    document.querySelector("#set-cards_wrapper > div:nth-child(3)") ||
+    document.querySelector("#set-cards_wrapper > div:last-child");
 
-  totalCard_wrapperEl.innerHTML = `
+  let totalHTML = `
+  <div class="col-md-3 mb-3 ms-auto">
   <div class="card total">
   <div class="card-header">
-    <h2>total work</h2>
+    <h2>total Reps</h2>
   </div>
   <div class="card-body">
-    <div class="type1-wrapper">
-      <h3>Type I Drills:</h3>
-      ${labelsBytype1HTML}
-   
-    </div>
-    <div class="type2-wrapper">
-      <h3>Type II Drills:</h3>
-    ${labelsBytype2HTML}
-    </div>
     <div class="totals-wrapper">
       <ul class="mb-0">
-      <li>
-      <strong>Weight: <span>${weight ? weight + "kg" : "unset"}</span></strong>
-    </li> 
         <li>
           <strong>Amount of Throws: <span>${throwsTotal}</span></strong>
         </li>
@@ -837,7 +849,9 @@ function updateRecordsHTML(arr) {
     </div>
   </div>
 </div>
+</div>
   `;
+  targetEl.insertAdjacentHTML("afterend", totalHTML);
 }
 
 function downloadPDF(event) {
@@ -850,21 +864,17 @@ function downloadPDF(event) {
   const doc = new jspdf.jsPDF("p", "pt", [612, 792]);
   const el = document.querySelector("#output");
   el.style.display = "block";
-  var divHeight = el.clientHeight;
-  var divWidth = el.clientWidth;
-  var ratio = divHeight / divWidth;
-  html2canvas(el, {
-    height: divHeight,
-    width: divWidth,
-  }).then(function (canvas) {
-    el.style.display = "";
-    var image = canvas.toDataURL("image/jpeg");
-    var width = doc.internal.pageSize.getWidth();
-    var height = doc.internal.pageSize.getHeight();
-    height = ratio * width;
-    doc.addImage(image, "JPEG", 0, 0, width - 20, height - 100);
-    doc.save("Day_Workout_" + new Date().toLocaleString() + ".pdf"); //Download the rendered PDF.
-    event.target.disabled = false;
+
+  doc.html(el, {
+    callback: function (doc) {
+      el.style = "";
+      event.target.disabled = false;
+      doc.save("Day_Workout_" + new Date().toLocaleString() + ".pdf");
+    },
+    x: 10,
+    y: 10,
+    width: 590,
+    windowWidth: 950,
   });
 }
 function downloadImportFile(content, fileName, contentType) {
@@ -1008,6 +1018,8 @@ function calculateResult() {
     throws: type1TotalActive,
     drills: 0,
     reps: type1TotalActive,
+    weight: Number(document.getElementById("weight_input").value) || "",
+    loop: document.querySelector(".loop_label input:checked").value.trim(),
     formula: "",
   });
 
@@ -1189,7 +1201,6 @@ function updateCalendarHTML(arr) {
   const calendar_title_inputEl = document.getElementById(
     "calendar_title_input"
   );
-  console.log(calander_sub_titleEl, calendar_title_inputEl);
   dayCards_wrapperEl.innerHTML = "";
   calander_sub_titleEl.innerHTML = calendar_title_inputEl.value;
   arr.forEach((dayArr, i) => {
@@ -1197,20 +1208,83 @@ function updateCalendarHTML(arr) {
     let drills = 0;
     let dayNum = i + 1;
     let weight = Number(document.getElementById("weight_input").value);
+    let cardSetsHTML = "";
     labelsBytype1HTML = "";
     labelsBytype2HTML = "";
     dayArr.forEach((el, i) => {
       throws += el.throws;
       drills += el.drills;
-      if (el.type1Vals.length) {
-        labelsBytype1HTML += `<h5>set ${i + 1}</h5>
-      <ul>
-      ${el.type1Vals
-        .map((val) => "<li>" + val + " (Throws: " + el.throws + ")</li>")
-        .join("")}
-      </ul>
-`;
+      let htmlCode = `
+      <div class="card set mb-3">
+       <div class="card-header">
+         <h2>set ${i + 1}</h2>
+       </div>
+       <div class="card-body">
+       <div class="${el.loop === "LDT" ? "d-flex flex-column-reverse" : ""}">
+         <div class="type1-wrapper">
+           <h3>Type I Drills:</h3>
+           <ul>
+           ${el.type1Vals
+             .map((val) => "<li>" + val + "(Throws: " + el.throws + ")</li>")
+             .join("")}
+         
+           </ul>
+         </div>
+         <div class="type2-wrapper ${!el.type2Vals.length ? "d-none" : ""}">
+          <h3>Type II Drills:</h3>
+           <ul>
+           ${el.type2Vals
+             .map(
+               (val) =>
+                 "<li>" +
+                 val +
+                 " (Reps: " +
+                 Math.round(el.drills / el.type2Vals.length) +
+                 ")</li>"
+             )
+             .join("")}
+           </ul>
+         </div>
+         </div>
+         <div class="totals-wrapper">
+           <ul class="mb-0">
+           <li>
+           <strong>Weight: <span>${el.weight || "unset"}</span></strong>
+         </li> 
+           <li>
+               <strong>Amount of Throws: <span>${el.throws}</span></strong>
+             </li>
+             <li>
+               <strong>Amount of Drills: <span>${el.drills}</span></strong>
+             </li>
+             <li>
+               <strong>Amount of Reps: <span>${el.reps}</span></strong>
+             </li>
+             </li>
+             ${
+               el.type2Vals.length
+                 ? ` <li>
+             <strong>Loop: <span>${el.loop || "LTD"}</span></strong>
+           </li>`
+                 : ""
+             }
+           </ul>
+         </div>
+       </div>
+     
+      <div class="card-footer">
+      ${
+        el.formula
+          ? `<h3>Formula Used:</h3>
+      <p>${el.formula} Formula</p>`
+          : ""
       }
+    </div>
+      
+     </div>
+      `;
+      cardSetsHTML += htmlCode;
+
       if (el.type2Vals.length) {
         labelsBytype2HTML += `<h5>set ${i + 1}</h5>
         <ul>
@@ -1228,30 +1302,15 @@ function updateCalendarHTML(arr) {
   `;
       }
     });
+
     let htmlCode = `
     <div class="col-md-3 total-card_wrapper">
                 <div class="card total day">
                   <div class="card-caption">Day ${dayNum}</div>
-                  <div class="card-header">
-                    <h2>total work</h2>
-                  </div>
                   <div class="card-body">
-                    <div class="type1-wrapper">
-                      <h3>Type I Drills:</h3>
-                    ${labelsBytype1HTML}
-                    </div>
-                    <div class="type2-wrapper">
-                      <h3>${labelsBytype2HTML ? "Type II Drills:" : ""}</h3>
-
-                      ${labelsBytype2HTML}
-                    </div>
+                   ${cardSetsHTML}
                     <div class="totals-wrapper">
                       <ul class="mb-0">
-                      <li>
-                          <strong>Weight: <span>${
-                            weight || "unset"
-                          }</span></strong>
-                        </li>
                         <li>
                           <strong>Amount of Throws: <span>${throws}</span></strong>
                         </li>
@@ -1273,6 +1332,7 @@ function updateCalendarHTML(arr) {
   });
 }
 function downloadCalendarPDF(event) {
+  const targetEl = document.getElementById("output-calander");
   if (!daysRecords.length) {
     alert("There is no days in calendar to download!");
     return false;
@@ -1283,24 +1343,16 @@ function downloadCalendarPDF(event) {
   const el = document.querySelector("#output-calander");
 
   el.style.display = "block";
-  let divHeight = el.clientHeight;
-  let divWidth = el.clientWidth;
-  let ratio = divHeight / divWidth;
-  html2canvas(el, {
-    height: divHeight,
-    width: divWidth,
-  }).then(function (canvas) {
-    el.style.display = "";
-    var image = canvas.toDataURL("image/jpeg");
-    var width = doc.internal.pageSize.getWidth();
-    var height = doc.internal.pageSize.getHeight();
-    height = ratio * width;
-    if (height > doc.internal.pageSize.getHeight()) {
-      height = doc.internal.pageSize.getHeight();
-    }
-    doc.addImage(image, "JPEG", 0, 0, width - 20, height - 20);
-    doc.save("Throw_Work_Calendar_" + new Date().toLocaleString() + ".pdf"); //Download the rendered PDF.
-    event.target.disabled = false;
+  doc.html(el, {
+    callback: function (doc) {
+      el.style = "";
+      event.target.disabled = false;
+      doc.save("Throw_Work_Calendar_" + new Date().toLocaleString() + ".pdf");
+    },
+    x: 20,
+    y: 5,
+    width: 560,
+    windowWidth: 950,
   });
 }
 document
@@ -1339,6 +1391,15 @@ document.getElementById("calendar_days").addEventListener("change", (e) => {
   switchCalendarActiveDay(value);
 });
 
+document.querySelectorAll("#loop_LTD,#loop_LDT").forEach((el) => {
+  el.addEventListener("change", function (e) {
+    let state = e.target.checked;
+    const targetEl = document.querySelector(
+      ".loop_label input:not([id='" + e.target.id + "'])"
+    );
+    targetEl.checked = !state;
+  });
+});
 // Call the function to update the "Drills Used on Workout" box when the page loads
 window.onload = function () {
   initDropdowns();
