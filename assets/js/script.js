@@ -376,7 +376,34 @@ const type2DrillsP4 = [
   "Single Leg Drill Down",
   "Squat & Cast",
 ];
-const type2DrillsP5 = [];
+const type2DrillsP5 = [
+
+"PILLAR 5 T",
+"STACK & ANGLE (SET)",
+"STACK COUNTERS",
+"ELEVATOR DROP (SQUAT)",
+"UP-DOWN",
+"PUSH DOWN",
+"DRILL DOWN",
+"T - STOP",
+"PUSH AROUND",
+"T-FOLD EXT",
+"SINGLE LEG PUSH DOWN",
+"WIND & DRILL",
+"PILLAR 5T",
+"ELEVATOR DROP",
+"STACK COUNTER",
+"PUSH AROUND",
+"LOAD & FOLD",
+"FOLD & OPEN",
+"OPEN & DROP",
+"HIP PUNCH REPEAT",
+"BLOCK ARM STOPS",
+"Single Leg Push-Down",
+"Single Leg Drill Down",
+"Squat & Cast",
+  
+];
 const type2DrillsP6 = [
   "BL ACTIVATION. & TWIST",
   "BLOCK LEG ACT",
