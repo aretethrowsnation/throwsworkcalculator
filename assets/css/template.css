@@ -44,7 +44,7 @@
 }
 .card .card-body {
   padding: calc(0.5 * var(--scale));
-  flex-grow: 1;
+  /* flex-grow: 1; */
   display: flex;
   flex-direction: column;
 }
@@ -96,7 +96,7 @@
 .card.total {
   border-color: #bf2626;
   padding-bottom: calc(6 * var(--scale));
-  height: 100%;
+  /* height: 100%; */
 }
 .card.total .card-header {
   background-color: #bf2626;
@@ -125,6 +125,7 @@ h2#workout_level_title {
   letter-spacing: 0px;
   margin-bottom: 0;
   font-family: sans-serif;
+  width: fit-content;
 }
 h3#workout_level_sub {
   font-family: sans-serif;
@@ -294,10 +295,80 @@ h3#calander_sub_title {
   margin: 0;
   text-transform: uppercase;
 }
-div#output .totals-wrapper {
+div#output .card.total .totals-wrapper {
   height: 100%;
   flex-direction: column;
   display: flex;
-  justify-content: end;
-  padding-bottom: 30px;
+  justify-content: start;
+  /* padding-bottom: 30px; */
+  margin-top: 30px;
+}
+div#set-cards_wrapper {
+  align-items: flex-start;
+}
+
+div#output .card.set .totals-wrapper {
+  padding-bottom: 0;
+}
+
+div#set-cards_wrapper > div:nth-child(9),
+div#set-cards_wrapper > div:nth-child(10),
+div#set-cards_wrapper > div:nth-child(11),
+div#set-cards_wrapper > div:nth-child(12) {
+  margin-bottom: 241px !important;
+}
+div#set-cards_wrapper > div:nth-child(21),
+div#set-cards_wrapper > div:nth-child(22),
+div#set-cards_wrapper > div:nth-child(23),
+div#set-cards_wrapper > div:nth-child(24) {
+  margin-bottom: 220px !important;
+}
+div#set-cards_wrapper > div:nth-child(33),
+div#set-cards_wrapper > div:nth-child(34),
+div#set-cards_wrapper > div:nth-child(35),
+div#set-cards_wrapper > div:nth-child(36) {
+  margin-bottom: 241px !important;
+}
+div#set-cards_wrapper > div:nth-child(45),
+div#set-cards_wrapper > div:nth-child(46),
+div#set-cards_wrapper > div:nth-child(47),
+div#set-cards_wrapper > div:nth-child(48) {
+  margin-bottom: 141px !important;
+}
+div#set-cards_wrapper > div:nth-child(57),
+div#set-cards_wrapper > div:nth-child(58),
+div#set-cards_wrapper > div:nth-child(59),
+div#set-cards_wrapper > div:nth-child(60) {
+  margin-bottom: 200px !important;
+}
+div#output-calander .card.total.day {
+  height: auto;
+  min-height: unset;
+  border: 0;
+}
+div#output-calander div#day-cards_wrapper .total-card_wrapper {
+  height: unset;
+}
+div#output-calander div#day-cards_wrapper {
+  justify-content: flex-start;
+}
+
+#output-calander .card.set {
+  margin-bottom: 30px;
+}
+#output-calander .card.set .totals-wrapper {
+  margin-top: 20px;
+}
+#output-calander .card.total.day .card-body {
+  justify-content: flex-start;
+  min-height: auto;
+  padding-bottom: 15px;
+}
+.loop_label {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  margin-right: 20px;
+  font-weight: bold;
+  cursor: pointer;
 }
