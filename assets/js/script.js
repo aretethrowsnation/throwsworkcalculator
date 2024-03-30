@@ -759,13 +759,13 @@ function updateRecordsHTML(arr) {
          }</span></strong>
        </li> 
          <li>
-             <strong>Amount of Throws: <span>${item.throws}</span></strong>
+             <strong>Throws: <span>${item.throws}</span></strong>
            </li>
            <li>
-             <strong>Amount of Drills: <span>${item.drills}</span></strong>
+             <strong>Drills: <span>${item.drills}</span></strong>
            </li>
            <li>
-             <strong>Amount of Reps: <span>${item.reps}</span></strong>
+             <strong>Reps: <span>${item.reps}</span></strong>
            </li>
           ${
             item.type2Vals.length
@@ -837,13 +837,13 @@ function updateRecordsHTML(arr) {
     <div class="totals-wrapper">
       <ul class="mb-0">
         <li>
-          <strong>Amount of Throws: <span>${throwsTotal}</span></strong>
+          <strong>Throws: <span>${throwsTotal}</span></strong>
         </li>
         <li>
-          <strong>Amount of Drills: <span>${drillsTotal}</span></strong>
+          <strong>Drills: <span>${drillsTotal}</span></strong>
         </li>
         <li>
-          <strong>Amount of Reps: <span>${repsTotal}</span></strong>
+          <strong>Reps: <span>${repsTotal}</span></strong>
         </li>
       </ul>
     </div>
@@ -1207,7 +1207,7 @@ function updateCalendarHTML(arr) {
     let throws = 0;
     let drills = 0;
     let dayNum = i + 1;
-    let weight = Number(document.getElementById("weight_input").value);
+
     let cardSetsHTML = "";
     labelsBytype1HTML = "";
     labelsBytype2HTML = "";
@@ -1252,13 +1252,13 @@ function updateCalendarHTML(arr) {
            <strong>Weight: <span>${el.weight || "unset"}</span></strong>
          </li> 
            <li>
-               <strong>Amount of Throws: <span>${el.throws}</span></strong>
+               <strong>Throws: <span>${el.throws}</span></strong>
              </li>
              <li>
-               <strong>Amount of Drills: <span>${el.drills}</span></strong>
+               <strong>Drills: <span>${el.drills}</span></strong>
              </li>
              <li>
-               <strong>Amount of Reps: <span>${el.reps}</span></strong>
+               <strong>Reps: <span>${el.reps}</span></strong>
              </li>
              </li>
              ${
@@ -1310,19 +1310,29 @@ function updateCalendarHTML(arr) {
                   <div class="card-body">
                    ${cardSetsHTML}
                     <div class="totals-wrapper">
-                      <ul class="mb-0">
-                        <li>
-                          <strong>Amount of Throws: <span>${throws}</span></strong>
-                        </li>
-                        <li>
-                          <strong>Amount of Drills: <span>${drills}</span></strong>
-                        </li>
-                        <li>
-                          <strong>Amount of Reps: <span>${
-                            throws + drills
-                          }</span></strong>
-                        </li>
-                      </ul>
+                    <div class="card total">
+  <div class="card-header">
+    <h2>total work</h2>
+  </div>
+  <div class="card-body">
+    <div class="totals-wrapper mt-3">
+     
+    <ul class="mb-0">
+    <li>
+      <strong>Throws: <span>${throws}</span></strong>
+    </li>
+    <li>
+      <strong>Drills: <span>${drills}</span></strong>
+    </li>
+    <li>
+      <strong>Reps: <span>${throws + drills}</span></strong>
+    </li>
+  </ul>
+
+    </div>
+  </div>
+</div>
+                  
                     </div>
                   </div>
                 </div>
