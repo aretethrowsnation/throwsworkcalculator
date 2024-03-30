@@ -40,6 +40,7 @@ const type1Drills = [
   " Static Wheel. P 4-5-6",
   " Stretch Back & Throw - P4-5-6",
   " Single Leg Step Back - P3-4-5-6",
+  " Slap Skips",
 ];
 
 const type2Drills = [
