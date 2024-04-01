@@ -30,6 +30,9 @@
           <button class="btn-save_day" onclick="saveCalendarDay(event)">
             Save Day
           </button>
+          <button class="btn-delete_day" onclick="deleteCalendarDay(event)">
+            Delete Day
+          </button>
         </div>
         <h1>Throw Work Calculation</h1>
         <div id="type1">
@@ -158,10 +161,10 @@
             cancel
           </button>
           <label for="loop_LTD" class="type2_hidden loop_label"
-            >LTD loop <input type="checkbox" id="loop_LTD" value="LTD" checked
+            >LTD Loop <input type="checkbox" id="loop_LTD" value="LTD" checked
           /></label>
           <label for="loop_LDT" class="type2_hidden loop_label"
-            >LDT loop <input type="checkbox" id="loop_LDT" value="LDT "
+            >LDT Loop <input type="checkbox" id="loop_LDT" value="LDT "
           /></label>
         </div>
         <div id="results">
@@ -262,6 +265,8 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>

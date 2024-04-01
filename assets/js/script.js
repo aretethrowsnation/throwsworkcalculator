@@ -40,6 +40,7 @@ const type1Drills = [
   " Static Wheel. P 4-5-6",
   " Stretch Back & Throw - P4-5-6",
   " Single Leg Step Back - P3-4-5-6",
+  " Slap Skips",
 ];
 
 const type2Drills = [
@@ -143,25 +144,29 @@ const type2Drills = [
   "P4 - Open & Stop",
   "P4 - OPEN & WRAP",
   "P5 - PILLAR 5 T",
-  "P5 - STACK & ANGLE",
+  "P5 - STACK & ANGLE (SET)",
   "P5 - STACK COUNTERS",
-  "P5 - ELEVATOR DROP",
+  "P5 - ELEVATOR DROP (SQUAT)",
   "P5 - UP-DOWN",
-  "P5 - SQUAT & CAST",
+  "P5 - PUSH DOWN",
   "P5 - DRILL DOWN",
-  "P5 - HEEL UP, PUSH DRILL DOWN",
-  "P5 - OPEN & STOP",
-  "P5 - HEEL UP - PUSH",
-  "P5 - PUSH AROUND DRILL",
-  "P5 - SINGLE LEG HEEL UP & PUSH",
-  "P5 - Single LEG PUSH DOWN",
+  "P5 - T - STOP",
+  "P5 - PUSH AROUND",
+  "P5 - T-FOLD EXT",
+  "P5 - SINGLE LEG PUSH DOWN",
+  "P5 - WIND & DRILL",
+  "P5 - PILLAR 5T",
+  "P5 - ELEVATOR DROP",
+  "P5 - STACK COUNTER",
+  "P5 - PUSH AROUND",
+  "P5 - LOAD & FOLD",
   "P5 - FOLD & OPEN",
-  "P5 - SQUATTED WINDS w/ DRILL CAST",
-  "P5 - Push-Down",
-  "P5 - Single Leg Drill Down.",
-  "P5 - Push-Around",
-  "P5 - Wind & Cast",
-  "P5 - SINGLE LEG HIP & SQUAT",
+  "P5 - OPEN & DROP",
+  "P5 - HIP PUNCH REPEAT",
+  "P5 - BLOCK ARM STOPS",
+  "P5 - Single Leg Push-Down",
+  "P5 - Single Leg Drill Down",
+  "P5 - Squat & Cast",
   "P6 BL ACTIVATION. & TWIST",
   "P6 - BLOCK LEG ACT. STOPS",
   "P6 - HIP TWIST REPEAT",
@@ -217,12 +222,18 @@ const type2DrillsP0 = [
   "GRIP F&E (SS)",
   "HOLD & ROLL (SS)",
   "PRESS & ROLL (SS)",
+  "GRIP OH PRESS (SS)",
+  "PLACEMENT RSP (SS)",
+  "PLACEMENT GLIDE (SS)",
   "PULL BACKS/PULL DOWN (SS)",
   "PULL & PUSH (SS)",
   "PUSH & LIFT (SS)",
   "FLICKS (SS)",
-  "DRIVERS (SS)",
+  "DRIVERS - VERTICAL (SS)",
+  "DRIVERS - HORIZONTAL (SS)",
+  "ASSISTED STRIKE (SS)",
   "OH TOSSES (SS)",
+  "FOLD & OPEN (SS)",
   "JABS (SS)",
   "PUNCH (SS)",
   "WALKING PUNCH (SS)",
@@ -344,7 +355,6 @@ const type2DrillsP4 = [
   "PUDDLE 3 & WRAP",
   "WALK AROUND (WRAP 101)",
   "BLOCK ARM WRAP",
-  "SEPARATION - RSP VS DT",
   "Stretch & Wrap",
   "STRETCH & OPEN",
   "PUSH & OPEN",
@@ -353,6 +363,10 @@ const type2DrillsP4 = [
   "Skip Skip Push T",
   "OPEN & STOP",
   "OPEN & WRAP",
+];
+const type2DrillsP5 = [
+  "PILLAR 5 T",
+  "STACK & ANGLE (SET)",
   "STACK COUNTERS",
   "ELEVATOR DROP (SQUAT)",
   "UP-DOWN",
@@ -376,9 +390,9 @@ const type2DrillsP4 = [
   "Single Leg Drill Down",
   "Squat & Cast",
 ];
-const type2DrillsP5 = [];
 const type2DrillsP6 = [
   "BL ACTIVATION. & TWIST",
+  "SKIP BLAT",
   "BLOCK LEG ACT",
   "HIP TWIST Repeat",
   "BLOCK ARM STOPS",
@@ -412,13 +426,14 @@ const type2DrillsP6 = [
   "PLW TO BLET",
   "REVERSE BLOCK LEG COUNTER EXT",
 ];
+
 const type2DrillsGroups = [
   type2DrillsP0,
   type2DrillsP1,
   type2DrillsP2,
   type2DrillsP3,
   type2DrillsP4,
-  type2Drills.filter((el) => el.startsWith("P5")),
+  type2DrillsP5,
   type2DrillsP6,
 ];
 let recordsArr = [];
@@ -444,31 +459,6 @@ function initDropdowns() {
     option.text = drill;
     type1Dropdown.appendChild(option);
   });
-
-  // Initialize Type II dropdowns
-  const type2DrillsAmountInput = document.getElementById("type2Drills");
-  const type2DrillsAmount = parseInt(type2DrillsAmountInput.value) || 0;
-
-  // Clear existing options in Type II dropdowns
-  for (let i = 1; i <= 3; i++) {
-    // Assuming there are 3 Type II dropdowns (modify as needed)
-    const type2Dropdown = document.getElementById(`type2Drill${i}`);
-    if (type2Dropdown) {
-      type2Dropdown.innerHTML = ""; // Clear existing options
-
-      // Populate Type II dropdowns based on the database
-      type2Drills.forEach((drill, i) => {
-        let option = document.createElement("option");
-        if (i != 0) {
-          option.value = drill;
-        } else {
-          option.value = "";
-        }
-        option.text = drill;
-        type2Dropdown.appendChild(option);
-      });
-    }
-  }
 }
 
 // Call the function to initialize dropdowns when the page loads
@@ -481,14 +471,19 @@ document.getElementById("type2Drills").addEventListener("input", initDropdowns);
 function updateType2Dropdowns() {
   const type2DrillsAmount =
     parseInt(document.getElementById("type2Drills").value) || 0;
+  if (type2DrillsAmount == 0) return false;
   const type2DropdownsContainer = document.getElementById("type2Dropdowns");
 
   // Clear existing dropdowns
-  type2DropdownsContainer.innerHTML = "";
+  // type2DropdownsContainer.innerHTML = "";
 
   // Create new dropdowns based on the amount
   if (type2DrillsAmount > 0) {
-    for (let i = 0; i < type2DrillsAmount; i++) {
+    for (
+      let i = type2DropdownsContainer.children.length / 2;
+      i < type2DrillsAmount;
+      i++
+    ) {
       const groupSelectEl = document.createElement("select");
       const groupSelectValueEl = document.createElement("select");
 
@@ -505,7 +500,7 @@ function updateType2Dropdowns() {
       type2DropdownsContainer.appendChild(groupSelectEl);
       type2DropdownsContainer.appendChild(groupSelectValueEl);
 
-      groupSelectEl.addEventListener("input", function () {
+      groupSelectEl.addEventListener("change", function () {
         if (groupSelectEl.value) {
           let index = Number(groupSelectEl.value);
           let valueArr = type2DrillsGroups[index];
@@ -519,6 +514,11 @@ function updateType2Dropdowns() {
           groupSelectValueEl.style.display = "none";
         }
       });
+    }
+    while (type2DropdownsContainer.children.length / 2 > type2DrillsAmount) {
+      type2DropdownsContainer.children[
+        type2DropdownsContainer.children.length - 1
+      ].remove();
     }
   }
 }
@@ -702,7 +702,6 @@ function accelerationFormula() {
 }
 function updateRecordsHTML(arr) {
   const setCards_wrapperEl = document.getElementById("set-cards_wrapper");
-  const totalCard_wrapperEl = document.getElementById("total-card_wrapper");
   const workout_level_titleEl = document.getElementById("workout_level_title");
   const workout_level_subEl = document.getElementById("workout_level_sub");
   setCards_wrapperEl.innerHTML = "";
@@ -765,7 +764,7 @@ function updateRecordsHTML(arr) {
              <strong>Drills: <span>${item.drills}</span></strong>
            </li>
            <li>
-             <strong>Reps: <span>${item.reps}</span></strong>
+             <strong>Total Reps: <span>${item.reps}</span></strong>
            </li>
           ${
             item.type2Vals.length
@@ -843,7 +842,7 @@ function updateRecordsHTML(arr) {
           <strong>Drills: <span>${drillsTotal}</span></strong>
         </li>
         <li>
-          <strong>Reps: <span>${repsTotal}</span></strong>
+          <strong>Total Reps: <span>${repsTotal}</span></strong>
         </li>
       </ul>
     </div>
@@ -902,7 +901,7 @@ function saveData() {
     );
   }
 }
-function showSelectedDrillsList(arr) {
+function showSelectedDrillsList(arr, isInit = false) {
   const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
   arr.forEach((item, i) => {
     let htmlCode = `
@@ -936,6 +935,10 @@ function showSelectedDrillsList(arr) {
     `;
     selectedDrillsListEl.innerHTML += htmlCode;
   });
+  if (isInit) {
+    $("#selectedDrillsList").sortable();
+  }
+  $("#selectedDrillsList").sortable("refresh");
 }
 function loadData(data) {
   if (!data) return false;
@@ -952,7 +955,7 @@ function loadData(data) {
   type2TotalFinal = 0;
   let arr = data.daysRecords[0];
   activeDayIndex = 0;
-  showSelectedDrillsList(arr);
+  showSelectedDrillsList(arr, true);
   arr.forEach((item, i) => {
     type1TotalFinal += item.throws;
     type2TotalFinal += item.drills;
@@ -1032,7 +1035,7 @@ function deleteItem(event) {
   let index = recordsArr.findIndex((el) => el.id == id);
   if (!recordsArr[index]) return false;
   event.target.closest(".drill-set").remove();
-  // recordsArr = recordsArr.filter((el) => el.id != id);
+
   recordsArr.splice(index, 1);
   type1TotalFinal = recordsArr.reduce((a, b) => a + b.throws, 0);
   type2TotalFinal = recordsArr.reduce((a, b) => a + b.drills, 0);
@@ -1058,10 +1061,36 @@ function editItemOpen(event) {
     type2DrillsEl.dispatchEvent(new Event("change"));
     onePlusTenFormulaEl.value = recordsArr[index].formula.split("+")[0];
     onePlusTenFormula2El.value = recordsArr[index].formula.split("+")[1];
+    const targetPillarEls = document.querySelectorAll(
+      '#type2Dropdowns select:not([id^="type2Drill"])'
+    );
+    const targetValuesEls = document.querySelectorAll(
+      '#type2Dropdowns select[id^="type2Drill"]'
+    );
+
+    recordsArr[index].type2Vals.forEach((val, i) => {
+      let pIndex = type2DrillsGroups.findIndex((el) => el.includes(val));
+      if (type2DrillsGroups[pIndex]) {
+        targetPillarEls[i].children[pIndex + 1].selected = true;
+        targetPillarEls[i].dispatchEvent(new Event("change"));
+      } else {
+        targetPillarEls[i].children[0].selected = true;
+      }
+      targetValuesEls[i].value = val;
+      targetValuesEls[i].style = "";
+    });
   } else {
     disable_type2();
   }
-
+  const loop_LDTEl = document.getElementById("loop_LDT");
+  const loop_LTDEl = document.getElementById("loop_LTD");
+  if (recordsArr[index].loop == "LDT") {
+    loop_LDTEl.checked = true;
+    loop_LTDEl.checked = false;
+  } else {
+    loop_LDTEl.checked = false;
+    loop_LTDEl.checked = true;
+  }
   calc_wrapperEl.classList.add("edit-mode");
   btnEdit_saveEl.onclick = () => {
     editItemSave(index, id);
@@ -1078,6 +1107,7 @@ function editItemSave(index, id) {
   let drills = Number(type2DrillsEl.value);
   let reps = throws + drills;
   let formula = "";
+  let loop = recordsArr[index].loop;
   if (input_disable_type2El.checked) {
     const arr = [type1ThrowsEl, type1DrillEl];
     for (let i = 0; i < arr.length; i++) {
@@ -1140,12 +1170,18 @@ function editItemSave(index, id) {
       Number(onePlusTenFormulaEl.value) +
       "+" +
       Number(onePlusTenFormula2El.value);
+
+    const loop_LDTEl = document.getElementById("loop_LDT");
+    if (loop_LDTEl.checked) {
+      loop = "LDT";
+    }
   }
 
   recordsArr[index].throws = throws;
   recordsArr[index].drills = drills;
   recordsArr[index].formula = formula;
   recordsArr[index].reps = reps;
+  recordsArr[index].loop = loop;
   recordsArr[index].type1Vals[0] = type1DrillEl.value;
 
   calc_wrapperEl.classList.remove("edit-mode");
@@ -1159,6 +1195,7 @@ function editItemCancel() {
 const calendar_daysEl = document.getElementById("calendar_days");
 const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
 const calc_controlsEl = document.getElementById("calc-controls");
+let step = 1;
 function saveCalendarDay(event) {
   if (!recordsArr.length) {
     return alert("Error: You can not Save an empty day!");
@@ -1167,7 +1204,7 @@ function saveCalendarDay(event) {
     "Are you sure you want to save this as a new day to calendar?"
   );
   if (response) {
-    const newDayIndex = daysRecords.length + 1;
+    const newDayIndex = daysRecords.length + step;
     daysRecords.push([...recordsArr]);
 
     calendar_daysEl.innerHTML += `<option value="${newDayIndex}" selected>Day ${
@@ -1180,7 +1217,30 @@ function saveCalendarDay(event) {
     activeDayIndex = newDayIndex;
   }
 }
-
+function deleteCalendarDay(event) {
+  const calendar_daysEl = document.querySelector("#calendar_days");
+  const value = calendar_daysEl.value;
+  const selectedOption = Array.from(
+    document.querySelectorAll("#calendar_days option")
+  ).filter((el) => el.value == value)[0];
+  if (daysRecords[value]) {
+    let response = confirm(
+      "Are you sure you want to delete " + selectedOption.innerHTML + "?"
+    );
+    if (response) {
+      selectedOption.remove();
+      daysRecords.splice(value, 1);
+      switchCalendarActiveDay(daysRecords.length * 2);
+      calendar_daysEl.children[daysRecords.length].selected = true;
+      step++;
+      for (let i = 0; i <= daysRecords.length; i++) {
+        calendar_daysEl.children[i].value = i;
+      }
+    }
+  } else {
+    return alert("This Day is not saved in the calendar yet!");
+  }
+}
 function switchCalendarActiveDay(index) {
   index = Number(index);
   selectedDrillsListEl.innerHTML = "";
@@ -1258,7 +1318,7 @@ function updateCalendarHTML(arr) {
                <strong>Drills: <span>${el.drills}</span></strong>
              </li>
              <li>
-               <strong>Reps: <span>${el.reps}</span></strong>
+               <strong>Total Reps: <span>${el.reps}</span></strong>
              </li>
              </li>
              ${
@@ -1325,7 +1385,7 @@ function updateCalendarHTML(arr) {
       <strong>Drills: <span>${drills}</span></strong>
     </li>
     <li>
-      <strong>Reps: <span>${throws + drills}</span></strong>
+      <strong>Total Reps: <span>${throws + drills}</span></strong>
     </li>
   </ul>
 
@@ -1392,11 +1452,17 @@ document
 
 document.getElementById("calendar_days").addEventListener("change", (e) => {
   let value = Number(e.target.value);
+  const btnDelete = document.querySelector(".btn-delete_day");
 
   if (value != activeDayIndex && daysRecords[value]) {
     calc_controlsEl.classList.add("edit-mode");
   } else {
     calc_controlsEl.classList.remove("edit-mode");
+  }
+  if (daysRecords[value]) {
+    btnDelete.style.display = "";
+  } else {
+    btnDelete.style.display = "none";
   }
   switchCalendarActiveDay(value);
 });
@@ -1410,10 +1476,19 @@ document.querySelectorAll("#loop_LTD,#loop_LDT").forEach((el) => {
     targetEl.checked = !state;
   });
 });
+
+$("#selectedDrillsList").on("sortstop", function (event, ui) {
+  let index = recordsArr.findIndex((el) => el.id == ui.item.attr("data-id"));
+
+  let item = recordsArr[index];
+  if (index !== ui.item.index()) {
+    recordsArr.splice(ui.item.index() + 1, 0, item);
+    recordsArr.splice(index, 1);
+    daysRecords[activeDayIndex] = recordsArr;
+  }
+});
+
 // Call the function to update the "Drills Used on Workout" box when the page loads
 window.onload = function () {
   initDropdowns();
-  updateType2Dropdowns();
-
-  // document.getElementById("selectedDrillsList").innerHTML = "";
 };

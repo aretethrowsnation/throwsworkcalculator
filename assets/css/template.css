@@ -128,11 +128,12 @@ h2#workout_level_title {
   width: fit-content;
 }
 h3#workout_level_sub {
-  font-family: sans-serif;
+  font-family: cursive;
   font-weight: normal;
   font-size: 30px;
   margin: 0;
   text-transform: uppercase;
+  font-weight: bold;
 }
 div#total-card_wrapper h5 {
   padding-left: 8px;
@@ -297,9 +298,12 @@ div#output .card.total .totals-wrapper {
   flex-direction: column;
   display: flex;
   justify-content: start;
-  /* padding-bottom: 30px; */
-  margin-top: 30px;
+  margin-top: 10px;
 }
+div#output .card.total {
+  padding-bottom: 14px;
+}
+
 div#set-cards_wrapper {
   align-items: flex-start;
 }
@@ -359,7 +363,7 @@ div#output-calander div#day-cards_wrapper {
 #output-calander .card.total.day .card-body {
   justify-content: flex-start;
   min-height: auto;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 .loop_label {
   display: flex;
@@ -368,4 +372,16 @@ div#output-calander div#day-cards_wrapper {
   margin-right: 20px;
   font-weight: bold;
   cursor: pointer;
+}
+
+div#output-calander .card.total {
+  padding-bottom: 0;
+}
+
+div#output-calander
+  .card.total.day
+  .card.set
+  + .totals-wrapper
+  .totals-wrapper {
+  margin-top: 5px !important;
 }
