@@ -363,6 +363,10 @@ const type2DrillsP4 = [
   "Skip Skip Push T",
   "OPEN & STOP",
   "OPEN & WRAP",
+];
+const type2DrillsP5 = [
+  "PILLAR 5 T",
+  "STACK & ANGLE (SET)",
   "STACK COUNTERS",
   "ELEVATOR DROP (SQUAT)",
   "UP-DOWN",
@@ -386,7 +390,6 @@ const type2DrillsP4 = [
   "Single Leg Drill Down",
   "Squat & Cast",
 ];
-const type2DrillsP5 = [];
 const type2DrillsP6 = [
   "BL ACTIVATION. & TWIST",
   "SKIP BLAT",
