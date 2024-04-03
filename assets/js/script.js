@@ -601,9 +601,11 @@ function addDrillSet() {
     }
     const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
 
-    let id = recordsArr[recordsArr.length - 1]
-      ? recordsArr[recordsArr.length - 1]["id"] + 1
-      : 1;
+    let maxId = recordsArr.reduce((a, b) => {
+      return a < b.id ? b.id : a;
+    }, 0);
+
+    let id = maxId + 1;
     let htmlCode = `
     <div class="drill-set" data-id="${id}">
     <button class="btn-delete" onclick="deleteItem(event)" data-id="${id}">&times;</button>
@@ -616,6 +618,9 @@ function addDrillSet() {
       <p>Throws - Type I: ${type1TotalActive}</p>
       <p>Drills - Type II: ${type2TotalActive}</p>
       <p>Total Reps: ${type1TotalActive + type2TotalActive}</p>
+      <p>Loop: ${document
+        .querySelector(".loop_label input:checked")
+        .value.trim()}</p>
     </div>
   </div>
     `;
@@ -901,7 +906,7 @@ function saveData() {
     );
   }
 }
-function showSelectedDrillsList(arr, isInit = false) {
+function showSelectedDrillsList(arr) {
   const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
   arr.forEach((item, i) => {
     let htmlCode = `
@@ -912,7 +917,7 @@ function showSelectedDrillsList(arr, isInit = false) {
     <button class="btn-edit" onclick="editItemOpen(event)" data-id="${
       item.id
     }">&#9998;</button>
-    <h5>Set ${item.id}</h5>
+    <h5>Set ${selectedDrillsListEl.children.length + 1}</h5>
     <ul>
      ${[
        ...item["type1Vals"].map((value) => "<li>" + value + "</li>"),
@@ -930,14 +935,13 @@ function showSelectedDrillsList(arr, isInit = false) {
       <p>Throws - Type I: ${item.throws}</p>
       <p>Drills - Type II: ${item.drills}</p>
       <p>Total Reps: ${item.reps}</p>
+      ${item.type2Vals.length ? `<p>Loop: ${item.loop || "LTD"}</p>` : ""}
     </div>
   </div>
     `;
     selectedDrillsListEl.innerHTML += htmlCode;
   });
-  if (isInit) {
-    $("#selectedDrillsList").sortable();
-  }
+
   $("#selectedDrillsList").sortable("refresh");
 }
 function loadData(data) {
@@ -994,9 +998,12 @@ function calculateResult() {
 
   type1TotalActive = Number(type1ThrowsEl.value);
   let type1Vals = [document.getElementById("type1Drill").value];
-  let id = recordsArr[recordsArr.length - 1]
-    ? recordsArr[recordsArr.length - 1]["id"] + 1
-    : 1;
+
+  let maxId = recordsArr.reduce((a, b) => {
+    return a < b.id ? b.id : a;
+  }, 0);
+
+  let id = maxId + 1;
   let htmlCode = `
     <div class="drill-set" data-id="${id}">
     <button class="btn-delete" onclick="deleteItem(event)" data-id="${id}">&times;</button>
@@ -1140,6 +1147,12 @@ function editItemSave(index, id) {
       type2DrillsEl,
       ...document.querySelectorAll("#type2Dropdowns select"),
     ];
+    const loop_LDTEl = document.getElementById("loop_LDT");
+    if (loop_LDTEl.checked) {
+      loop = "LDT";
+    } else {
+      loop = "LTD";
+    }
     for (let i = 0; i < arr.length; i++) {
       if (!arr[i].value) {
         return arr[i].focus();
@@ -1163,6 +1176,7 @@ function editItemSave(index, id) {
       <p>Throws - Type I:  ${throws}</p>
       <p>Drills - Type II: ${drills}</p>
       <p>Total Reps: ${reps}</p>
+      <p>Loop: ${loop || "LTD"}</p>
     </div>
   `;
     recordsArr[index].type2Vals = [...type2Dropdowns].map((el) => el.value);
@@ -1170,11 +1184,6 @@ function editItemSave(index, id) {
       Number(onePlusTenFormulaEl.value) +
       "+" +
       Number(onePlusTenFormula2El.value);
-
-    const loop_LDTEl = document.getElementById("loop_LDT");
-    if (loop_LDTEl.checked) {
-      loop = "LDT";
-    }
   }
 
   recordsArr[index].throws = throws;
@@ -1346,7 +1355,7 @@ function updateCalendarHTML(arr) {
       cardSetsHTML += htmlCode;
 
       if (el.type2Vals.length) {
-        labelsBytype2HTML += `<h5>set ${i + 1}</h5>
+        labelsBytype2HTML += `<h5>set ${el.id}</h5>
         <ul>
         ${el.type2Vals
           .map(
@@ -1480,14 +1489,26 @@ document.querySelectorAll("#loop_LTD,#loop_LDT").forEach((el) => {
 $("#selectedDrillsList").on("sortstop", function (event, ui) {
   let index = recordsArr.findIndex((el) => el.id == ui.item.attr("data-id"));
 
-  let item = recordsArr[index];
   if (index !== ui.item.index()) {
-    recordsArr.splice(ui.item.index() + 1, 0, item);
-    recordsArr.splice(index, 1);
-    daysRecords[activeDayIndex] = recordsArr;
+    setTimeout(() => {
+      let arr = [];
+      $("#selectedDrillsList > .drill-set").each((i, el) => {
+        const id = $(el).attr("data-id");
+        const targetIndex = recordsArr.findIndex((el) => el.id == id);
+        $(el)
+          .find("h5")
+          .html("Set " + (i + 1));
+
+        arr.push(recordsArr[targetIndex]);
+      });
+      recordsArr = arr;
+      if (daysRecords[activeDayIndex]) {
+        daysRecords[activeDayIndex] = recordsArr;
+      }
+    }, 500);
   }
 });
-
+$("#selectedDrillsList").sortable();
 // Call the function to update the "Drills Used on Workout" box when the page loads
 window.onload = function () {
   initDropdowns();
