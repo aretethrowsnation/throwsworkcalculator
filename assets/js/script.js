@@ -484,35 +484,19 @@ function updateType2Dropdowns() {
       i < type2DrillsAmount;
       i++
     ) {
-      const groupSelectEl = document.createElement("select");
+    
       const groupSelectValueEl = document.createElement("select");
 
       groupSelectValueEl.id = `type2Drill${i}`;
-      groupSelectValueEl.style.display = "none";
+     
 
-      groupSelectEl.innerHTML +=
-        '<option value="" selected>Select type II Drills group</option>';
-      type2DrillsGroups.forEach((el, i) => {
-        groupSelectEl.innerHTML +=
-          '<option value="' + i + '">Pillar  ' + i + "</option>";
-      });
       // Add the new dropdowns
-      type2DropdownsContainer.appendChild(groupSelectEl);
       type2DropdownsContainer.appendChild(groupSelectValueEl);
 
-      groupSelectEl.addEventListener("change", function () {
-        if (groupSelectEl.value) {
-          let index = Number(groupSelectEl.value);
-          let valueArr = type2DrillsGroups[index];
-          groupSelectValueEl.style.display = "";
-          groupSelectValueEl.innerHTML = "";
-          valueArr.forEach((val) => {
-            groupSelectValueEl.innerHTML +=
-              '<option value="' + val + '" >' + val + "</option>";
-          });
-        } else {
-          groupSelectValueEl.style.display = "none";
-        }
+      $("#type2Drill" + i).select2({
+        data: type2DrillsGroups
+          .map((el, i) => el.map((v) => "Pillar " + i + " - " + v))
+          .flat(Infinity),
       });
     }
     while (type2DropdownsContainer.children.length / 2 > type2DrillsAmount) {
@@ -599,40 +583,18 @@ function addDrillSet() {
       alert("Please Enter the Amount of Throws and click the button to update");
       return false;
     }
-    const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
+    // const selectedDrillsListEl = document.querySelector("#selectedDrillsList");
 
     let maxId = recordsArr.reduce((a, b) => {
       return a < b.id ? b.id : a;
     }, 0);
 
     let id = maxId + 1;
-    let htmlCode = `
-    <div class="drill-set" data-id="${id}">
-    <button class="btn-delete" onclick="deleteItem(event)" data-id="${id}">&times;</button>
-    <button class="btn-edit" onclick="editItemOpen(event)" data-id="${id}">&#9998;</button>
-    <h5>Set ${id}</h5>
-    <ul>
-     ${drillArr.map((value) => "<li>" + value + "</li>").join("")}
-    </ul>
-    <div class="drill-set_totals">
-      <p>Throws - Type I: ${type1TotalActive}</p>
-      <p>Drills - Type II: ${type2TotalActive}</p>
-      <p>Total Reps: ${type1TotalActive + type2TotalActive}</p>
-      <p>Loop: ${document
-        .querySelector(".loop_label input:checked")
-        .value.trim()}</p>
-    </div>
-  </div>
-    `;
-    selectedDrillsListEl.innerHTML += htmlCode;
-    type1TotalFinal += type1TotalActive;
-    type2TotalFinal += type2TotalActive;
-
     let formula =
       document.getElementById("onePlusTenFormula").value +
       "+" +
       document.getElementById("onePlusTenFormula2").value;
-    recordsArr.push({
+    let recordItem = {
       id,
       type1Vals,
       type2Vals,
@@ -642,7 +604,13 @@ function addDrillSet() {
       weight: Number(document.getElementById("weight_input").value) || "",
       loop: document.querySelector(".loop_label input:checked").value.trim(),
       formula,
-    });
+    };
+ 
+    type1TotalFinal += type1TotalActive;
+    type2TotalFinal += type2TotalActive;
+
+    recordsArr.push(recordItem);
+    showSelectedDrillsList([recordItem]);
 
     type1TotalActive = 0;
     type2TotalActive = 0;
@@ -745,7 +713,7 @@ function updateRecordsHTML(arr) {
            .map(
              (val) =>
                "<li>" +
-               val +
+               val.split("-")[1].trim() +
                " (Reps: " +
                Math.round(item.drills / item.type2Vals.length) +
                ")</li>"
@@ -817,7 +785,7 @@ function updateRecordsHTML(arr) {
     .map(
       (el) =>
         "<li>" +
-        el +
+        el.split("-")[1].trim() +
         "(Reps: " +
         Math.round(item.drills / item.type2Vals.length) +
         ")</li>"
@@ -924,7 +892,7 @@ function showSelectedDrillsList(arr) {
        ...item["type2Vals"].map(
          (value) =>
            "<li>" +
-           value +
+           value.split("-")[1].trim() +
            " (Reps: " +
            Math.round(item.drills / item.type2Vals.length) +
            ")</li>"
@@ -1068,22 +1036,14 @@ function editItemOpen(event) {
     type2DrillsEl.dispatchEvent(new Event("change"));
     onePlusTenFormulaEl.value = recordsArr[index].formula.split("+")[0];
     onePlusTenFormula2El.value = recordsArr[index].formula.split("+")[1];
-    const targetPillarEls = document.querySelectorAll(
-      '#type2Dropdowns select:not([id^="type2Drill"])'
-    );
+
     const targetValuesEls = document.querySelectorAll(
       '#type2Dropdowns select[id^="type2Drill"]'
     );
 
     recordsArr[index].type2Vals.forEach((val, i) => {
-      let pIndex = type2DrillsGroups.findIndex((el) => el.includes(val));
-      if (type2DrillsGroups[pIndex]) {
-        targetPillarEls[i].children[pIndex + 1].selected = true;
-        targetPillarEls[i].dispatchEvent(new Event("change"));
-      } else {
-        targetPillarEls[i].children[0].selected = true;
-      }
       targetValuesEls[i].value = val;
+      targetValuesEls[i].dispatchEvent(new Event("change"));
       targetValuesEls[i].style = "";
     });
   } else {
@@ -1170,7 +1130,9 @@ function editItemSave(index, id) {
     <h5>Set ${id}</h5>
     <ul>
     <li>${type1DrillEl.value}</li>
-    ${[...type2Dropdowns].map((el) => "<li>" + el.value + "</li>").join("")}
+    ${[...type2Dropdowns]
+      .map((el) => "<li>" + el.value.split("-")[1].trim() + "</li>")
+      .join("")}
     </ul>
     <div class="drill-set_totals">
       <p>Throws - Type I:  ${throws}</p>
@@ -1306,7 +1268,7 @@ function updateCalendarHTML(arr) {
              .map(
                (val) =>
                  "<li>" +
-                 val +
+                 val.split("-")[1].trim() +
                  " (Reps: " +
                  Math.round(el.drills / el.type2Vals.length) +
                  ")</li>"
@@ -1361,7 +1323,7 @@ function updateCalendarHTML(arr) {
           .map(
             (val) =>
               "<li>" +
-              val +
+              val.split("-")[1].trim() +
               " (Reps: " +
               Math.round(el.drills / el.type2Vals.length) +
               ")</li>"

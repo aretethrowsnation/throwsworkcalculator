@@ -385,3 +385,8 @@ div#output-calander
   .totals-wrapper {
   margin-top: 5px !important;
 }
+
+span.select2.select2-container {
+  margin: 5px 0;
+  text-align: left;
+}
